@@ -1,0 +1,66 @@
+#!/usr/bin/env node
+
+// START ENV
+
+// chia plots params without tempDir and dist Dir
+const plotsParams = 'plots create -k 32 -e -b 4000 -r 2 -u 128 -t';
+
+const defaultDistDir = '/Volumes/cbj的硬盘';
+const defaultTempDir = '/Volumes/cbj的硬盘/temp';
+
+// chia client path
+const chiaPath = '/Applications/Chia.app/Contents/Resources/app.asar.unpacked/daemon/chia';
+
+// END ENV
+
+const program = require('commander');
+const readline = require('readline');
+const util = require('util');
+const { execFile, exec, spawn } = require('child_process');
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+const package = require('../package.json');
+
+program
+  .version(package.version)
+  .usage('[command] [options]')
+  .option('-d, --distPath', 'plots distPath')
+  .option('-t, --tempPath', 'plots tempPath')
+  .parse(process.argv);
+
+const { distPath = defaultDistDir, tempPath = defaultTempDir } = program.opts();
+const cmd = `${chiaPath}`;
+const params = plotsParams.split(' ').concat([tempPath, '-d', distPath]);
+
+let chiaP;
+
+process.on('SIGINT', function() {
+  console.log('kill chiaP')
+  chiaP.kill();
+  program.runningCommand && program.runningCommand.kill('SIGKILL');
+  process.exit(0);
+});
+
+function loopP() {
+  chiaP = spawn(cmd, params);
+  chiaP.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+    // TODO: filter some log and show progress
+  });
+
+  chiaP.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  chiaP.on('close', (code) => {
+    if (code == 1) {
+      loopP();
+    }
+    console.log(`child process exited with code ${code}`);
+  });
+}
+
+loopP();

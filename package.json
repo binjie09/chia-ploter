@@ -1,0 +1,29 @@
+{
+  "name": "chia-ploter",
+  "version": "1.0.0",
+  "description": "easy way to plot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./bin/chia-miner"
+  },
+  "bin": {
+    "chia-miner": "./bin/chia-miner"
+  },
+  "files": [
+    "lib",
+    "bin",
+    ".default.env",
+    "env.sh",
+    "tsconfig.json"
+  ],
+  "keywords": [
+    "chia",
+    "plot"
+  ],
+  "author": "binjie chen",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^7.2.0"
+  }
+}
