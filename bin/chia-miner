@@ -50,7 +50,7 @@ function loopP() {
   chiaP.stdout.on('data', (data) => {
     console.log(`stdout: ${data}`);
     console.log('count', count++);
-    count += data.trim().split(/\r\n|\r|\n/).length;
+    count += `${data}`.trim().split(/\r\n|\r|\n/).length;
     const progress = count / FINISHED_LOG_LINES;
     console.log(`progress: ${progress*100}%`)
   });
