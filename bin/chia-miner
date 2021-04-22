@@ -61,7 +61,7 @@ function loopP() {
   });
 
   chiaP.on('close', (code) => {
-    if (code == 1) {
+    if (code == 1 || code == 0) {
       console.log('final lines count', count)
       loopTimes++;
       count = 0;
