@@ -23,7 +23,7 @@ const rl = readline.createInterface({
 });
 
 const package = require('../package.json');
-const FINISHED_LOG_LINES = 2626; // 128
+const FINISHED_LOG_LINES = 5217; // 128
 
 program
   .version(package.version)
@@ -45,6 +45,7 @@ process.on('SIGINT', function() {
   process.exit(0);
 });
 let count = 0;
+let loopTimes = 1;
 function loopP() {
   chiaP = spawn(cmd, params);
   chiaP.stdout.on('data', (data) => {
@@ -52,7 +53,7 @@ function loopP() {
     console.log('count', count++);
     count += `${data}`.trim().split(/\r\n|\r|\n/).length;
     const progress = count / FINISHED_LOG_LINES;
-    console.log(`progress: ${progress*100}%`)
+    console.log(`progress ${loopTimes}: ${progress*100}%`)
   });
 
   chiaP.stderr.on('data', (data) => {
@@ -62,6 +63,8 @@ function loopP() {
   chiaP.on('close', (code) => {
     if (code == 1) {
       console.log('final lines count', count)
+      loopTimes++;
+      count = 0;
       loopP();
     }
     console.log(`child process exited with code ${code}`);

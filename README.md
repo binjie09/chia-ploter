@@ -11,4 +11,4 @@ npm install
 
 - [x] Infinite loop chia plots
 - [x] Config parameter at `./bin/chia-miner`
-- [ ] filter some logs and show progress
+- [x] filter some logs and show progress
