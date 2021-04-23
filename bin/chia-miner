@@ -46,6 +46,10 @@ process.on('SIGINT', function() {
 });
 let count = 0;
 let loopTimes = 1;
+let firstStartTime = new Date().getTime();
+let startTime = new Date().getTime();
+let lastEndTimeUsed;
+
 function loopP() {
   chiaP = spawn(cmd, params);
   chiaP.stdout.on('data', (data) => {
@@ -53,7 +57,15 @@ function loopP() {
     console.log('count', count++);
     count += `${data}`.trim().split(/\r\n|\r|\n/).length;
     const progress = count / FINISHED_LOG_LINES;
-    console.log(`progress ${loopTimes}: ${progress*100}%`)
+    const durationMin = (Date.now() - startTime) / 1000 / 60;
+
+    console.log(`
+     progress ${loopTimes}: ${progress*100}%
+     totalTime: ${(Date.now() - firstStartTime) / 1000 / 60} min
+     thisTime: ${durationMin} min
+     lastEndTimeUsed: ${lastEndTimeUsed} min
+     `);
+
   });
 
   chiaP.stderr.on('data', (data) => {
@@ -62,7 +74,9 @@ function loopP() {
 
   chiaP.on('close', (code) => {
     if (code == 1 || code == 0) {
-      console.log('final lines count', count)
+      console.log('final lines count', count);
+      lastEndTimeUsed = (Date.now() - startTime) / 1000 / 60;
+      startTime = new Date().getTime();
       loopTimes++;
       count = 0;
       loopP();
