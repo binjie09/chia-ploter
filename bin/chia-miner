@@ -3,13 +3,13 @@
 // START ENV
 
 // chia plots params without tempDir and dist Dir
-const plotsParams = 'plots create -k 32 -e -b 4000 -r 2 -u 128 -t';
+const plotsParams = 'plots create -k 32 -e -b 4509 -r 8 -u 128 -t';
 
-const defaultDistDir = '/Volumes/cbj的硬盘';
-const defaultTempDir = '/Volumes/cbj的硬盘/temp';
+const defaultDistDir = `H:\\chia`;
+const defaultTempDir = `G:\\temp\\C`;
 
 // chia client path
-const chiaPath = '/Applications/Chia.app/Contents/Resources/app.asar.unpacked/daemon/chia';
+const chiaPath = `C:\\Users\\adminPC\\AppData\\Local\\chia-blockchain\\app-1.1.1\\resources\\app.asar.unpacked\\daemon\\chia.exe`;
 
 // END ENV
 
@@ -28,10 +28,10 @@ const FINISHED_LOG_LINES = 5217; // 128
 program
   .version(package.version)
   .usage('[command] [options]')
-  .option('-d, --distPath', 'plots distPath')
-  .option('-t, --tempPath', 'plots tempPath')
+  .option('-d, --distPath <distPath>', 'plots distPath')
+  .option('-t, --tempPath <tempPath>', 'plots tempPath')
   .parse(process.argv);
-
+console.log(program.opts())
 const { distPath = defaultDistDir, tempPath = defaultTempDir } = program.opts();
 const cmd = `${chiaPath}`;
 const params = plotsParams.split(' ').concat([tempPath, '-d', distPath]);
