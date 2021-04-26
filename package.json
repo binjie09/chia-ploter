@@ -1,21 +1,18 @@
 {
   "name": "chia-ploter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "easy way to plot",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./bin/chia-miner"
+    "start": "./bin/chiaP"
   },
   "bin": {
-    "chia-miner": "./bin/chia-miner"
+    "chiaP": "./bin/chiaP"
   },
   "files": [
-    "lib",
     "bin",
-    ".default.env",
-    "env.sh",
-    "tsconfig.json"
+    "utils"
   ],
   "keywords": [
     "chia",

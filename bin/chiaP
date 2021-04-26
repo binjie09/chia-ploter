@@ -3,13 +3,13 @@
 // START ENV
 
 // chia plots params without tempDir and dist Dir
-const plotsParams = 'plots create -k 32 -e -b 4509 -r 8 -u 128 -t';
+const plotsParams = 'plots create -k 32 -e -b 4000 -r 8 -u 128 -t';
 
 const defaultDistDir = `H:\\chia`;
-const defaultTempDir = `G:\\temp\\C`;
+const defaultTempDir = `D:\\temp\\bbbB`;
 
 // chia client path
-const chiaPath = `C:\\Users\\adminPC\\AppData\\Local\\chia-blockchain\\app-1.1.1\\resources\\app.asar.unpacked\\daemon\\chia.exe`;
+// const chiaPath = `C:\\Users\\adminPC\\AppData\\Local\\chia-blockchain\\app-1.1.1\\resources\\app.asar.unpacked\\daemon\\chia.exe`;
 
 // END ENV
 
@@ -17,10 +17,11 @@ const program = require('commander');
 const readline = require('readline');
 const util = require('util');
 const { execFile, exec, spawn } = require('child_process');
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
+const { getWinChiaExe } = require('../utils');
+
+const winChiaPath = getWinChiaExe();
+const macChiaPath = `/Applications/Chia.app/Contents/Resources/app.asar.unpacked/daemon/chia`;
+const chiaPath = process.platform === 'darwin' ? macChiaPath : winChiaPath;
 
 const package = require('../package.json');
 const FINISHED_LOG_LINES = 5217; // 128
@@ -28,8 +29,8 @@ const FINISHED_LOG_LINES = 5217; // 128
 program
   .version(package.version)
   .usage('[command] [options]')
-  .option('-d, --distPath <distPath>', 'plots distPath')
-  .option('-t, --tempPath <tempPath>', 'plots tempPath')
+  .requiredOption('-d, --distPath <distPath>', 'plots distPath')
+  .requiredOption('-t, --tempPath <tempPath>', 'plots tempPath')
   .parse(process.argv);
 console.log(program.opts())
 const { distPath = defaultDistDir, tempPath = defaultTempDir } = program.opts();
@@ -64,7 +65,9 @@ function loopP() {
      totalTime: ${(Date.now() - firstStartTime) / 1000 / 60} min
      thisTime: ${durationMin} min
      lastEndTimeUsed: ${lastEndTimeUsed} min
-     `);
+     dist: ${distPath}
+     temp: ${tempPath}
+     `, new Date());
 
   });
 
