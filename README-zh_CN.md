@@ -1,6 +1,6 @@
 # chia-ploter
 
-完全免配置的p图工具
+完全免配置的p图工具,支持Windows和mac
 
 使用其他语言阅读：[English](./README.md) | 简体中文
 
@@ -14,7 +14,7 @@
 ## 快速开p
 首先你得安装好了官方的客户端吧，这就不说了。然后运行`npm install chiaP`就可以装上这个工具了`chiaP`,开P！
 ```
-npm install chiaP
+npm install chiaP -g
 chiaP -t D:\temp\a -d E:\chia
 ```
 ![](https://github.com/binjie09/chia-ploter/blob/main/img/20210427002246.jpg)

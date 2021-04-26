@@ -4,7 +4,7 @@ easy way to plot
 Read this in other languages: English | [简体中文](./README-zh_CN.md)
 ## START
 ```
-npm install chiaP
+npm install chiaP -g
 chiaP -t D:\temp\a -d E:\chia
 ```
 ![](https://github.com/binjie09/chia-ploter/blob/main/img/20210427002246.jpg)
