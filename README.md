@@ -1,7 +1,7 @@
 # chia-ploter
 easy way to plot
 
-Read this in other languages: English | [简体中文](./Readme_zh-CN.md)
+Read this in other languages: English | [简体中文](./README-zh_CN.md)
 ## START
 ```
 npm install chiaP
