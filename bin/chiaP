@@ -17,11 +17,11 @@ const program = require('commander');
 const readline = require('readline');
 const util = require('util');
 const { execFile, exec, spawn } = require('child_process');
+const osLocale = require('os-locale');
 const { getWinChiaExe } = require('../utils');
 
-const winChiaPath = getWinChiaExe();
 const macChiaPath = `/Applications/Chia.app/Contents/Resources/app.asar.unpacked/daemon/chia`;
-const chiaPath = process.platform === 'darwin' ? macChiaPath : winChiaPath;
+const chiaPath = process.platform === 'darwin' ? macChiaPath : getWinChiaExe();
 
 const package = require('../package.json');
 const FINISHED_LOG_LINES = 5217; // 128
@@ -59,16 +59,26 @@ function loopP() {
     count += `${data}`.trim().split(/\r\n|\r|\n/).length;
     const progress = count / FINISHED_LOG_LINES;
     const durationMin = (Date.now() - startTime) / 1000 / 60;
-
-    console.log(`
-     progress ${loopTimes}: ${progress*100}%
-     totalTime: ${(Date.now() - firstStartTime) / 1000 / 60} min
-     thisTime: ${durationMin} min
-     lastEndTimeUsed: ${lastEndTimeUsed} min
-     dist: ${distPath}
-     temp: ${tempPath}
-     `, new Date());
-
+    osLocale().then(locale => {
+      if (locale === 'zh-CN') {
+        console.log(`
+           循环使用临时目录${tempPath}，往最终目录${distPath}p盘中。。。
+           当前p的进度 ${loopTimes}: ${progress*100}%
+           总共用时: ${(Date.now() - firstStartTime) / 1000 / 60} 分钟
+           当前轮用时: ${durationMin} 分钟
+           上次p完用了: ${lastEndTimeUsed} 分钟
+        `, new Date());
+      } else {
+        console.log(`
+           progress ${loopTimes}: ${progress*100}%
+           totalTime: ${(Date.now() - firstStartTime) / 1000 / 60} min
+           thisTime: ${durationMin} min
+           lastEndTimeUsed: ${lastEndTimeUsed} min
+           dist: ${distPath}
+           temp: ${tempPath}
+        `, new Date());
+      }
+    })
   });
 
   chiaP.stderr.on('data', (data) => {

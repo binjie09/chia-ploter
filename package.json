@@ -1,6 +1,6 @@
 {
   "name": "chia-ploter",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "easy way to plot",
   "main": "index.js",
   "scripts": {
@@ -19,8 +19,17 @@
     "plot"
   ],
   "author": "binjie chen",
+  "homepage": "https://github.com/binjie09/chia-ploter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/binjie09/chia-ploter"
+  },
+  "bugs": {
+    "url": "https://github.com/binjie09/chia-ploter/issues"
+  },
   "license": "ISC",
   "dependencies": {
-    "commander": "^7.2.0"
+    "commander": "^7.2.0",
+    "os-locale": "^5.0.0"
   }
 }
