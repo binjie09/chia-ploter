@@ -12,7 +12,9 @@
 
 
 ## 快速开p
-首先你得安装好了官方的客户端吧，这就不说了。然后运行`npm install chiaP`就可以装上这个工具了`chiaP`,开P！
+首先你得安装好了官方的客户端吧，这就不说了。
+然后在 [https://nodejs.org/zh-cn/download/](https://nodejs.org/zh-cn/download/) 这里下载安装对应系统的nodejs
+然后运行`npm install chiaP`就可以装上这个工具了`chiaP`,开P！
 ```
 npm install chiaP -g
 chiaP -t D:\temp\a -d E:\chia
